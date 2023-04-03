@@ -5,7 +5,6 @@ const knex = require('knex')(require('../knexfile'))
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-
 router.post('/', async (req, res) => {
     const { username, password } = req.body;
 
@@ -20,7 +19,7 @@ router.post('/', async (req, res) => {
 
         // Generate a JWT token and send it back to the client
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
-        res.json({ token });
+        res.json({ token, username: user.username }); // Add the username to the response
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
