@@ -13,7 +13,6 @@ const cors = require('cors');
 
 const rooms = {};
 
-// Add a new object to store the chat messages
 const messages = {};
 
 const server = app.listen(PORT, () => {
@@ -26,14 +25,13 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
     io.emit('updateRooms', rooms);
 
-    socket.on('createRoom', (callback) => { // Add callback here
+    socket.on('createRoom', (callback) => {
         const roomId = socket.id;
         rooms[roomId] = { host: socket.id, players: [socket.id] };
         socket.join(roomId);
         io.emit('updateRooms', rooms);
         console.log(`Room ${roomId} created`);
 
-        // Pass the created room ID back to the client
         callback(roomId);
     });
 
@@ -46,9 +44,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('closeRoom', (roomId) => {
-        // Add logic to remove the room from the list of active rooms
         delete rooms[roomId];
-        io.emit('updateRooms', rooms); // Update the list of active rooms for all connected clients
+        io.emit('updateRooms', rooms);
     });
 
     socket.on('joinRoom', (roomId) => {
@@ -74,7 +71,6 @@ io.on('connection', (socket) => {
         }
     });
 
-    // Add a new event listener to handle incoming chat messages
     socket.on('chatMessage', ({ roomId, message }) => {
         const timestamp = new Date().getTime();
         if (!messages[roomId]) {
@@ -90,7 +86,6 @@ io.on('connection', (socket) => {
 
 
     socket.on('updateGameState', (data) => {
-        // console.log(data)
         if (rooms[socket.id]) {
             rooms[socket.id].players.forEach((playerId) => {
                 io.to(playerId).emit('updateGameState', data);
