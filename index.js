@@ -24,14 +24,17 @@ const io = socketIo(server, { transports: ['websocket', 'polling'] });
 
 io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
-    io.emit('updateRooms', rooms)
+    io.emit('updateRooms', rooms);
 
-    socket.on('createRoom', () => {
+    socket.on('createRoom', (callback) => { // Add callback here
         const roomId = socket.id;
         rooms[roomId] = { host: socket.id, players: [socket.id] };
         socket.join(roomId);
         io.emit('updateRooms', rooms);
         console.log(`Room ${roomId} created`);
+
+        // Pass the created room ID back to the client
+        callback(roomId);
     });
 
 
