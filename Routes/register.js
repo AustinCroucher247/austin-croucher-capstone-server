@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const knex = require('knex')(require('../knexfile'))
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs")
+    ;
 const jwt = require('jsonwebtoken');
 
 router.post('/', async (req, res) => { // Change '/register' to '/'
