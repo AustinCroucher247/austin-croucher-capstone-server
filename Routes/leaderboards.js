@@ -26,4 +26,16 @@ router.get('/leaderboard', async (req, res) => {
     }
 });
 
+router.get('/leaderboard', async (req, res) => {
+
+    try {
+        const scores = await knex('leaderboards')
+
+        res.json(scores);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
