@@ -11,4 +11,19 @@ router.route('/')
 router.route('/')
     .post(postScore)
 
+router.get('/leaderboard', async (req, res) => {
+    const { username } = req.query;
+
+    try {
+        const scores = await knex('leaderboards')
+            .where('username', username)
+            .orderBy('score', 'desc');
+
+        res.json(scores);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
