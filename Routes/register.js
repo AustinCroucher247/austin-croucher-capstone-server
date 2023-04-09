@@ -6,7 +6,7 @@ const bcrypt = require("bcryptjs")
     ;
 const jwt = require('jsonwebtoken');
 
-router.post('/', async (req, res) => { // Change '/register' to '/'
+router.post('/', async (req, res) => {
     const { username, password } = req.body;
 
     try {
