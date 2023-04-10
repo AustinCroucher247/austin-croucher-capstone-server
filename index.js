@@ -26,8 +26,7 @@ io.on('connection', (socket) => {
     io.emit('updateRooms', rooms);
 
     socket.on('createRoom', (username, callback) => {
-        const roomId = username;
-        rooms[roomId] = { host: socket.id, players: [socket.id] };
+        rooms[socket.id] = { host: socket.id, players: [socket.id], hostname: username };
         socket.join(roomId);
         io.emit('updateRooms', rooms);
         console.log(`Room ${roomId} created`);
