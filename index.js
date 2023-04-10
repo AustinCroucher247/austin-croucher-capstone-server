@@ -67,9 +67,9 @@ io.on('connection', (socket) => {
         }
     });
 
-    // socket.on('message', (message) => {
-    //     io.to(message.roomId).emit('chatMessage', message);
-    // });
+    socket.on('message', (message) => {
+        io.to(message.roomId).emit('chatMessage', message);
+    });
 
     socket.on('chatMessage', ({ roomId, message }) => {
         const timestamp = new Date().getTime();
