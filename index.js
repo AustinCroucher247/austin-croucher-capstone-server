@@ -25,13 +25,11 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
     io.emit('updateRooms', rooms);
 
-    socket.on('createRoom', (username, callback) => {
-        rooms[socket.id] = { host: socket.id, players: [socket.id], hostname: username };
-        socket.join(roomId);
+    socket.on('createRoom', (username) => {
+        rooms[socket.id] = { host: socket.id, players: [socket.id], username: username };
+        socket.join(socket.id);
         io.emit('updateRooms', rooms);
-        console.log(`Room ${roomId} created`);
-
-        callback(roomId);
+        console.log(`Room ${socket.id} created`);
     });
 
 
@@ -55,9 +53,8 @@ io.on('connection', (socket) => {
             console.log(`User ${socket.id} joined room ${roomId}`);
         }
     });
-    socket.on('message', (message) => {
-        io.to(message.roomId).emit('chatMessage', message);
-    });
+
+
     socket.on('leaveRoom', (roomId) => {
         if (rooms[roomId]) {
             rooms[roomId].players = rooms[roomId].players.filter((id) => id !== socket.id);
@@ -69,6 +66,10 @@ io.on('connection', (socket) => {
             console.log(`User ${socket.id} left room ${roomId}`);
         }
     });
+
+    // socket.on('message', (message) => {
+    //     io.to(message.roomId).emit('chatMessage', message);
+    // });
 
     socket.on('chatMessage', ({ roomId, message }) => {
         const timestamp = new Date().getTime();
