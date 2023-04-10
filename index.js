@@ -122,10 +122,17 @@ io.on('connection', (socket) => {
     });
 });
 
+// const cors = require('cors');
 
+const corsOptions = {
+    origin: ['http://localhost:3000', 'https://calm-dasik-5c6551.netlify.app'],
+    credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' }));
+// app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use('/leaderboard', leaderboardRoute);
 app.use('/login', loginRoute);
