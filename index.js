@@ -25,8 +25,8 @@ io.on('connection', (socket) => {
     console.log('User connected:', socket.id);
     io.emit('updateRooms', rooms);
 
-    socket.on('createRoom', (username, callback) => {
-        const roomId = username;
+    socket.on('createRoom', (callback) => {
+        const roomId = socket.id;
         rooms[roomId] = { host: socket.id, players: [socket.id] };
         socket.join(roomId);
         io.emit('updateRooms', rooms);
