@@ -15,8 +15,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // Start the server
-server.listen(8080, () => {
-    console.log('Server started on port 8080');
+server.listen(3306, () => {
+    console.log('Server started on port 3306');
 });
 
 // WebSocket server setup
