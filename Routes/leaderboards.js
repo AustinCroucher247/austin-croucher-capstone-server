@@ -38,4 +38,15 @@ router.get('/leaderboard', async (req, res) => {
     }
 });
 
+
+const { postTetrisScore } = require('../controllers/leaderboardController');
+
+router.route('/tetris')
+    .post(postTetrisScore);
+
+const { getTetrisLeaderboard } = require('../controllers/leaderboardController');
+
+router.route('/tetris/leaderboard')
+    .get(getTetrisLeaderboard);
+
 module.exports = router;

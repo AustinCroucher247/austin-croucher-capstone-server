@@ -36,3 +36,30 @@ exports.postScore = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.postTetrisScore = async (req, res) => {
+    const { username, score } = req.body;
+
+    try {
+        await knex('TetrisLeaderboards').insert({
+            id: uuidv4(),
+            username,
+            score,
+        });
+
+        res.status(201).json({ message: 'Score posted successfully' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
+
+exports.getTetrisLeaderboard = async (_req, res) => {
+    try {
+        const scores = await knex('TetrisLeaderboards').orderBy('score', 'desc');
+        res.json(scores);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
