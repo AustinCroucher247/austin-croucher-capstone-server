@@ -41,12 +41,13 @@ router.get('/leaderboard', async (req, res) => {
 
 const { postTetrisScore } = require('../controllers/leaderboardController');
 
-router.route('/tetris')
-    .post(postTetrisScore);
 
 const { getTetrisLeaderboard } = require('../controllers/leaderboardController');
-
 router.route('/tetris/leaderboard')
-    .get(getTetrisLeaderboard);
+    .get(getTetrisLeaderboard)
+    .post(postTetrisScore);
+
+console.log("Registered route: /tetris/leaderboard (GET)");
+console.log("Registered route: /tetris/leaderboard (POST)");
 
 module.exports = router;
