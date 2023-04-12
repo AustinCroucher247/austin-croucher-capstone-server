@@ -9,6 +9,7 @@ const CLIENT_URL = process.env.CLIENT_URL;
 const http = require('http');
 const socketIo = require('socket.io');
 const cors = require('cors');
+const tetrisRoutes = require('./Routes/tetrisLeaderboard');
 
 
 const rooms = {};
@@ -137,3 +138,4 @@ app.use(express.json());
 app.use('/leaderboard', leaderboardRoute);
 app.use('/login', loginRoute);
 app.use('/register', registerRoute);
+app.use('/tetris', tetrisRoutes); 
