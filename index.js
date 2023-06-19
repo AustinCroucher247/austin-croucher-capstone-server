@@ -126,7 +126,7 @@ io.on('connection', (socket) => {
 // const cors = require('cors');
 
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://calm-dasik-5c6551.netlify.app'],
+    origin: ['http://localhost:3000', 'https://retrorumble.netlify.app'],
     credentials: true,
 };
 
