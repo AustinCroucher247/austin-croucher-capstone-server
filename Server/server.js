@@ -9,9 +9,10 @@ const server = http.createServer(app);
 const io = socketIo(server, { transports: ['websocket', 'polling'] });
 
 const corsOptions = {
-    origin: 'http://localhost:3000'
+    origin: ['http://localhost:3000', 'https://retrorumble.netlify.app'],
 };
 
+app.use(cors(corsOptions));
 app.use(cors(corsOptions));
 
 // Start the server
